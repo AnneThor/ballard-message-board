@@ -7,10 +7,7 @@ const Topic = require("../../src/db/models").Topic;
 
 describe("routes : topics", () => {
 
-  console.log("inside the main function");
-
   beforeEach( (done) => {
-    console.log("inside before each");
     this.topic;
     sequelize.sync({force: true}).then( (res) => {
       Topic.create({

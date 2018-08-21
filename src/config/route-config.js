@@ -5,6 +5,7 @@ module.exports = {
       const topicRoutes = require("../routes/topics");
       app.use(staticRoutes);
       app.use(topicRoutes);
+
   }
 
 
