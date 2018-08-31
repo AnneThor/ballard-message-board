@@ -79,9 +79,9 @@ describe("Post", () => {
       .then( (associatedTopic) => {
         expect(associatedTopic.title).toBe("Expeditions to Alpha Centauri");
         done();
-      })
-    })
-  })
+      });
+    });
+  });
 
   describe("#setTopic()", () => {
     it("should associate a topic and a post together", (done) => {
