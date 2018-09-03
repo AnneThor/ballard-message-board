@@ -8,7 +8,11 @@ module.exports = (sequelize, DataTypes) => {
     description: {
       type: DataTypes.STRING,
       allowNull: false,
-    }
+    },
+    flairId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
   }, {});
   Topic.associate = function(models) {
     // associations can be defined here
@@ -19,6 +23,10 @@ module.exports = (sequelize, DataTypes) => {
     Topic.hasMany(models.Post, {
       foreignKey: "topicId",
       as: "posts"
+    });
+    Topic.belongsTo(models.Flair, {
+      foreignKey: "flairId",
+      onDelete: "SET NULL",
     });
   };
   return Topic;

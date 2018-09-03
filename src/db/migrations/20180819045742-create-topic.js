@@ -2,6 +2,14 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Topics', {
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      description: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -12,13 +20,15 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      description: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
+      flairId: {
+        type: Sequelize.INTEGER,
+        onDelete: "SET NULL",
+        allowNull: true,
+        references: {
+          model: "Flairs",
+          key: "id",
+          as: "flairId",
+        },
       },
       updatedAt: {
         allowNull: false,
