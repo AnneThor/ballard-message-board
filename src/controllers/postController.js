@@ -18,11 +18,12 @@ module.exports = {
   },
 
   destroy(req, res, next) {
+    const topicId = req.params.topicId;
     postQueries.deletePost(req.params.id, (err, deletedRecordsCount) => {
       if(err) {
-        res.redirect(500, `/topics/${req.params.topicId}/posts/${req.params.id}`)
+        res.redirect(500, `/topics/${topicId}/posts/${req.params.id}`)
       } else {
-        res.redirect(303, `/topics/${req.params.topicId}`)
+        res.redirect(303, `/topics/${topicId}`)
       }
     });
   },
@@ -53,10 +54,12 @@ module.exports = {
 
   update(req, res, next) {
     postQueries.updatePost(req.params.id, req.body, (err, post) => {
+      const topicId = req.params.topicId;
+      const postId = req.params.id;
       if(err || post == null) {
-        res.redirect(404, `/topics/${req.params.topicId}/posts/${req.params.id}/edit`);
+        res.redirect(404, `/topics/${topicId}/posts/${postId}/edit`);
       } else {
-        res.redirect(`/topics/${req.params.topicId}/posts/${req.params.id}`);
+        res.redirect(`/topics/${topicId}/posts/${postId}`);
       }
     })
   },
