@@ -55,6 +55,7 @@ describe("routes : topics", () => {
         description: "What's your favorite blink-182 song?"
       }
     };
+
     it("should create a new topic and redirect", (done) => {
       request.post(options, (err, res, body) => {
         Topic.findOne({where: {title: "blink-182 songs"}})
@@ -70,6 +71,29 @@ describe("routes : topics", () => {
         })
       });
     });
+
+    it("should not allow a topic to be created under minimum title length", (done) => {
+      const badPost = {
+        url: `${base}create`,
+        form: {
+          title: "A",
+          description: "B"
+        }
+      }
+      request.post(badPost, (err, res, body) => {
+        Topic.findOne({where: {title: "A"}})
+        .then( (topic) => {
+          expect(topic).toBeNull();
+          done();
+        })
+        .catch( (err) => {
+          console.log(err);
+          done();
+        });
+      });
+    });
+
+
   })
 
   describe("GET /topics/:id", () => {
