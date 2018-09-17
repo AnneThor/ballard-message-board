@@ -8,23 +8,23 @@ describe( "Flair", () => {
     this.topic;
     this.flair;
     sequelize.sync({force:true}).then( (res) => {
-      Flair.create({
-        name: "Test Flair",
-        color: "Test Color",
+      Topic.create({
+        title: "Test Topic Is Long enough?",
+        description: "Test description is failing validation I think!!",
       })
-      .then( (flair) => {
-        this.flair = flair;
-        Topic.create({
-          title: "Test Topic",
-          description: "Test description",
-          flairId: this.flair.id,
+      .then( (topic) => {
+        this.topic = topic;
+        Flair.create({
+          name: "Test Flair",
+          color: "black",
+          topicId: this.topic.id,
         })
-        .then( (topic) => {
-          this.topic = topic;
+        .then( (flair) => {
+          this.flair = flair;
           done();
-        });
+        })
       })
-      .catch( (err) => {
+    .catch( (err) => {
         console.log(err);
         done();
       });
@@ -33,31 +33,16 @@ describe( "Flair", () => {
 
   describe("#create()", () => {
 
-    it("should be valid as a foreign key in a topic object", (done) => {
-      Topic.create({
-        title: "A test",
-        description: "test topic",
-        flairId: this.flair.id,
-      })
-      .then( topic => {
-        expect(this.flair.id).toBe(1);
-        expect(this.topic.flairId).toBe(1);
-        done();
-      })
-      .catch( err => {
-        console.log(err);
-        done();
-      });
-    });
-
     it("should create a flair object with a name and color", (done) => {
       Flair.create({
         name: "Happy flair",
         color: "pink",
+        topicId: this.topic.id,
       })
       .then( (flair) => {
         expect(flair.name).toBe("Happy flair");
         expect(flair.color).toBe("pink");
+        expect(flair.topicId).toBe(this.topic.id);
         done();
       })
       .catch( (err) => {

@@ -5,12 +5,16 @@
   </head>
   <body>
     <% include ../static/partials/navbar.ejs %>
+    <% include ../static/partials/messages.ejs %>
     <main class="container">
+
+      <a href="/topics/<%= post.topicId %>">See All Posts</a>
+
       <h1><%= post.title %></h1>
       <a href="/topics/<%= post.topicId %>/posts/<%= post.id %>/edit" class="btn btn-warning">Edit</a>
-        <form style="display:initial" action="/topics/<% post.topicId %>/posts/<%= post.id %>/destroy" method="post">
-          <button type="submit" class="btn btn-danger">Delete</button>
-        </form>
+      <form style="display:initial" action="/topics/<%= post.topicId %>/posts/<%= post.id %>/destroy" method="post">
+        <button type="submit" class="btn btn-danger">Delete</button>
+      </form>
       <p><%= post.body %></p>
     </main>
     <% include ../static/partials/baseScripts.ejs %>

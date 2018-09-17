@@ -5,6 +5,7 @@
   </head>
   <body>
     <% include ../static/partials/navbar.ejs %>
+    <% include ../static/partials/messages.ejs %>
     <main class="container">
       <h1>Edit Post</h1>
       <form action="/topics/<%= post.topicId %>/posts/<%= post.id %>/update" method="post">

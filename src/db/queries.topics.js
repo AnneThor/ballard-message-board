@@ -43,7 +43,7 @@ module.exports = {
     return Topic.findById(id, {
       include: [
         { model: Post, as: "posts" },
-        { model: Flair, as: "flairs"}
+        { model: Flair, as: "flairs"},
       ]
     })
     .then( (topic) => {

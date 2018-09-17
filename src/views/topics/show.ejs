@@ -8,12 +8,21 @@
 
     <main class="container">
       <h1><%= topic.title %></h1>
-      <a href="/topics/<%= topic.id %>/edit" class="btn btn-warning">Edit</a>
+      <a href="/topics/<%= topic.id %>/edit" class="btn btn-warning">Edit Topic</a>
+      <a href="/topics/<%= topic.id %>/flairs/new" class="btn btn-success">New Flair</a>
       <a href="/topics/<%= topic.id %>/posts/new" class="btn btn-success">New Post</a>
       <form style="display:initial" action="/topics/<%= topic.id %>/destroy" method="post">
-        <button type="submit" class="btn btn-danger">Delete</button>
+        <button type="submit" class="btn btn-danger">Delete Topic</button>
       </form>
       <p><%= topic.description %></p>
+
+      <% topic.flairs.forEach( (flair) => { %>
+        <label style="color:<%= flair.color %>">**<%= flair.name %>**</label>
+        <form style="display:initial" action="/topics/<%= flair.topicId %>/flairs/<%= flair.id %>/destroy" method="post">
+          <button type="submit" class="btn btn-danger">Delete Flair</button>
+        </form>
+        <a href="/topics/<%= flair.topicId %>/flairs/<%= flair.id %>/edit" class="btn btn-warning">Edit Flair</a>
+      <% }) %>
 
       <h1>Posts</h1>
       <ul class="list-group">
