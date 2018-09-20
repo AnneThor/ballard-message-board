@@ -22,10 +22,12 @@ module.exports = {
     }
     const errors = req.validationErrors();
     if(errors) {
+      console.log(currentUser.id, currentUser);
       req.flash("error", errors);
       return res.redirect(req.headers.referer);
     } else {
       return next();
     }
-  }
+  },
+
 }
