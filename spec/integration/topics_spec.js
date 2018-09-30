@@ -51,7 +51,6 @@ describe("routes : topics", () => {
         });
       });
 
-
     describe("GET /topics", () => {
       it("should list all topics", done => {
         request.get(base, (err, res, body) => {
@@ -82,6 +81,7 @@ describe("routes : topics", () => {
         description: "What's your favorite blink-182 song?"
       }
     };
+    
     it("should create a new topic and redirect", (done) => {
       request.post(options, (err, res, body) => {
         Topic.findOne({where: {title: "blink-182 songs"}})
