@@ -129,7 +129,8 @@ describe("routes : comments", () => {
         url: "http://localhost:3000/auth/fake",
         form: {
           role: "member",
-          userId: this.user.id
+          email: this.user.email,
+          id: this.user.id,
         }
       }, (err, res, body) => {
         done();
@@ -139,7 +140,6 @@ describe("routes : comments", () => {
     describe("POST /topics/:topicId/posts/:postId/comments/create", () => {
 
       it("should create a new comment and redirect", (done) => {
-        console.log("current user: ", this.user.role);
         const options = {
           url: `${base}${this.topic.id}/posts/${this.post.id}/comments/create`,
           form: {
@@ -162,8 +162,7 @@ describe("routes : comments", () => {
       });
     });
 
-/*
-    xdescribe("POST /topics/:topicId/posts/:postId/comments/:id/destroy", () => {
+    describe("POST /topics/:topicId/posts/:postId/comments/:id/destroy", () => {
 
       it("should delete the comment with the associated id", done => {
         Comment.all()
@@ -185,8 +184,6 @@ describe("routes : comments", () => {
         });
 
       }); //closes describe for member/destroy
-
-*/
 
   }); //closes suite for signed in user
 
