@@ -164,11 +164,33 @@ describe("routes : comments", () => {
 
     describe("POST /topics/:topicId/posts/:postId/comments/:id/destroy", () => {
 
+      beforeEach( done => {
+        this.secondUser;
+        this.secondComment;
+        User.create({
+          email: "example@example.com",
+          password: "password",
+          role: "member",
+        })
+        .then( user => {
+          this.secondUser = user;
+          Comment.create({
+            body: "This is a comment that this.user cannot delete",
+            postId: this.post.id,
+            userId: this.secondUser.id,
+          })
+          .then( comment => {
+            this.secondComment = comment;
+            done();
+          });
+        });
+      })
+
       it("should delete the comment with the associated id", done => {
         Comment.all()
         .then( comments => {
           const commentCountBeforeDelete = comments.length;
-          expect(commentCountBeforeDelete).toBe(1);
+          expect(commentCountBeforeDelete).toBe(2);
           request.post(
             `${base}${this.topic.id}/posts/${this.post.id}/comments/${this.comment.id}/destroy`,
             (err, res, body) => {
@@ -183,9 +205,128 @@ describe("routes : comments", () => {
           });
         });
 
+        it("should not delete a comment made by another user", done => {
+
+          request.post(
+            `${base}${this.topic.id}/posts/${this.post.id}/comments/${this.secondComment.id}/destroy`,
+            (err, res, body) => {
+              expect(res.statusCode).toBe(401);
+              Comment.findOne({where: {userId: this.secondUser.id}})
+              .then( comment => {
+                expect(err).toBeNull();
+                expect(comment).not.toBeNull();
+                expect(comment.body).toBe("This is a comment that this.user cannot delete");
+                done();
+              });
+            });
+
+        });
+
       }); //closes describe for member/destroy
 
   }); //closes suite for signed in user
 
+  describe("admin performing CRUD actions for Comment", () => {
+
+    beforeEach( done => {
+      request.get({
+        url: "http://localhost:3000/auth/fake",
+        form: {
+          role: "admin",
+          email: this.user.email,
+          id: this.user.id,
+        }
+      }, (err, res, body) => {
+        done();
+      });
+    })
+
+    describe("POST /topics/:topicId/posts/:postId/comments/create", () => {
+
+      it("should create a new comment and redirect", (done) => {
+        const options = {
+          url: `${base}${this.topic.id}/posts/${this.post.id}/comments/create`,
+          form: {
+            body: "This comment is amazing!",
+          }
+        };
+        request.post(options, (err, res, body) => {
+          Comment.findOne({where: {body: "This comment is amazing!"}})
+          .then( comment => {
+            expect(comment).not.toBeNull();
+            expect(comment.body).toBe("This comment is amazing!");
+            expect(comment.id).not.toBeNull();
+            done();
+          })
+          .catch((err) => {
+            console.log(err);
+            done();
+          });
+        });
+      });
+    });
+
+    describe("POST /topics/:topicId/posts/:postId/comments/:id/destroy", () => {
+
+      beforeEach( done => {
+        this.secondUser;
+        this.secondComment;
+        User.create({
+          email: "example@example.com",
+          password: "password",
+          role: "member",
+        })
+        .then( user => {
+          this.secondUser = user;
+          Comment.create({
+            body: "This is a comment that admin user can delete",
+            postId: this.post.id,
+            userId: this.secondUser.id,
+          })
+          .then( comment => {
+            this.secondComment = comment;
+            done();
+          });
+        });
+      })
+
+      it("should delete the comment with the associated id", done => {
+        Comment.all()
+        .then( comments => {
+          const commentCountBeforeDelete = comments.length;
+          expect(commentCountBeforeDelete).toBe(2);
+          request.post(
+            `${base}${this.topic.id}/posts/${this.post.id}/comments/${this.comment.id}/destroy`,
+            (err, res, body) => {
+              expect(res.statusCode).toBe(302);
+              Comment.all()
+              .then( comments => {
+                expect(err).toBeNull();
+                expect(comments.length).toBe(commentCountBeforeDelete-1);
+                done();
+              })
+            });
+          });
+        });
+
+        it("should delete a comment made by another user", done => {
+
+          request.post(
+            `${base}${this.topic.id}/posts/${this.post.id}/comments/${this.secondComment.id}/destroy`,
+            (err, res, body) => {
+              expect(res.statusCode).toBe(302);
+              Comment.findOne({where: {userId: this.secondUser.id}})
+              .then( comment => {
+                expect(err).toBeNull();
+                expect(comment).toBeNull();
+                done();
+              });
+            });
+
+        });
+
+      }); //closes describe for admin/destroy
+
+  }); //closes suite for admin user
 
 }); //final closing bracket
