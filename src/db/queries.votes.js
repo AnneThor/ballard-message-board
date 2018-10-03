@@ -8,8 +8,8 @@ module.exports = {
   createVote(req, val, callback) {
     return Vote.findOne({
       where: {
-        postId: req.params.postId,
-        userId: req.user.id,
+        postId: parseInt(req.params.postId),
+        userId: parseInt(req.user.id),
       }
     })
     .then( vote => {

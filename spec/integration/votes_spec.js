@@ -93,6 +93,7 @@ describe("routes : votes", () => {
         url: "http://localhost:3000/auth/fake",
         form: {
           role: "member",
+          email: "example@example.com",
           id: this.user.id,
         }
       }, (err, res, body) => {
@@ -126,6 +127,43 @@ describe("routes : votes", () => {
           });
         });
       });
+
+      it("should not allow a user to create two upvotes", done => {
+        const options = {
+          url: `${base}${this.topic.id}/posts/${this.post.id}/votes/upvote`,
+        };
+        request.get(options, (err, res, body) => { //post one upvote
+          Vote.findOne({
+            where: {
+              userId: this.user.id,
+              postId: this.post.id,
+            }
+          })
+          .then( vote => {
+            request.get(options, (err, res, body) => {
+              Vote.findAll({
+                where: {
+                  userId: this.user.id,
+                  postId: this.post.id,
+                }
+              })
+              .then( votes => {
+                expect(votes.length).toBe(1);
+                done();
+              })
+              .catch( err => {
+                console.log(err);
+                done();
+              })
+            })
+          })
+          .catch( err => {
+            console.log(err);
+            done();
+          })
+        })
+      });
+
     });
 
     describe("GET /topics/:topicId/posts/:postId/votes/downvote", () => {
@@ -157,6 +195,8 @@ describe("routes : votes", () => {
     });
 
   }); // end of signed in user voting suite
+
+
 
 
 }); //end of vote test suite

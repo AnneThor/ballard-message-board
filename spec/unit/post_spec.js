@@ -2,6 +2,10 @@ const sequelize = require("../../src/db/models/index").sequelize;
 const Topic = require("../../src/db/models").Topic;
 const Post = require("../../src/db/models").Post;
 const User = require("../../src/db/models").User;
+const Vote = require("../../src/db/models").Vote;
+const base = "http://localhost:3000/topics/";
+const request = require("request");
+const server = require("../../src/server");
 
 describe("Post", () => {
 
@@ -131,6 +135,172 @@ describe("Post", () => {
         done();
       });
     });
+  });
+
+  describe("#getPoints()", () => {
+
+    beforeEach( done => {
+      request.get({
+        url: "http://localhost:3000/auth/fake",
+        form: {
+          role: "member",
+          email: "example@example.com",
+          id: this.user.id,
+        }
+      }, (err, res, body) => {
+        done();
+      });
+    });
+
+    it("should return the total number of points for the given post", done => {
+      Post.findById(this.post.id, {
+        include: [
+          { model: Vote, as: "votes" }
+        ]
+      })
+      .then( post => {
+        expect(post.getPoints()).toBe(0);
+        done();
+      })
+      .catch( err => {
+        console.log(err);
+        done();
+      })
+    });
+
+    it("should return the total number of points for the given post", done => {
+      const options = {
+        url: `${base}${this.topic.id}/posts/${this.post.id}/votes/upvote`,
+      };
+      request.get(options, (err, res, body) => {
+
+        Post.findById(this.post.id, {
+          include: [
+            { model: Vote, as: "votes" }
+          ]
+        })
+        .then( post => {
+          expect(post.getPoints()).toBe(1);
+          done();
+        })
+        .catch( err => {
+          console.log(err);
+          done();
+        })
+      });
+    });
+
+  });
+
+
+  describe("#hasUpvoteFor()", () => {
+
+    beforeEach( done => {
+      request.get({
+        url: "http://localhost:3000/auth/fake",
+        form: {
+          role: "member",
+          email: "example@example.com",
+          id: this.user.id,
+        }
+      }, (err, res, body) => {
+        done();
+      });
+    });
+
+    it("should return false because the user does not have an upvote", done => {
+      Post.findById(this.post.id, {
+        include: [
+          { model: Vote, as: "votes" }
+        ]
+      })
+      .then( post => {
+        expect(post.hasUpvoteFor(this.user.id)).toBe(false);
+        done();
+      })
+      .catch( err => {
+        console.log(err);
+        done();
+      })
+    });
+
+    it("should return true because the user has upvoted the post", done => {
+      const options = {
+        url: `${base}${this.topic.id}/posts/${this.post.id}/votes/upvote`,
+      };
+      request.get(options, (err, res, body) => {
+          Post.findById(this.post.id, {
+            include: [
+              { model: Vote, as: "votes" }
+            ]
+          })
+          .then( post => {
+            expect(post.getPoints()).toBe(1);
+            expect(post.hasUpvoteFor(this.user.id)).toBe(true);
+            done();
+          })
+          .catch( err => {
+            console.log(err);
+            done();
+          })
+        });
+    });
+
+  });
+
+  describe("#hasDownvoteFor()", () => {
+
+    beforeEach( done => {
+      request.get({
+        url: "http://localhost:3000/auth/fake",
+        form: {
+          role: "member",
+          email: "example@example.com",
+          id: this.user.id,
+        }
+      }, (err, res, body) => {
+        done();
+      });
+    });
+
+    it("should return false because the user does not have a downvote", done => {
+      Post.findById(this.post.id, {
+        include: [
+          { model: Vote, as: "votes" }
+        ]
+      })
+      .then( post => {
+        expect(post.hasDownvoteFor(this.user.id)).toBe(false);
+        done();
+      })
+      .catch( err => {
+        console.log(err);
+        done();
+      })
+    });
+
+    it("should return true because the user has downvoted the post", done => {
+      const options = {
+        url: `${base}${this.topic.id}/posts/${this.post.id}/votes/downvote`,
+      };
+      request.get(options, (err, res, body) => {
+          Post.findById(this.post.id, {
+            include: [
+              { model: Vote, as: "votes" }
+            ]
+          })
+          .then( post => {
+            expect(post.getPoints()).toBe(-1);
+            expect(post.hasDownvoteFor(this.user.id)).toBe(true);
+            done();
+          })
+          .catch( err => {
+            console.log(err);
+            done();
+          })
+        });
+    });
+
   });
 
 });

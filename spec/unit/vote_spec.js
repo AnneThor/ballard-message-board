@@ -107,6 +107,22 @@ describe("Vote", () => {
       })
     });
 
+    it("should not create a vote with an invalid value [not -1 or 1]", done => {
+      Vote.create({
+        value: "Some other value",
+        postId: this.post.id,
+        userId: this.user.id,
+      })
+      .then( vote => {
+        //will not run becauase that value is not invalid
+        done();
+      })
+      .catch( err => {
+        expect(err.message).toContain("Validation error");
+        done();
+      })
+    });
+
   }); //end of create tests
 
   describe("#setUser()", () => {
