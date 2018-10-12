@@ -6,16 +6,16 @@
   <body>
     <% include ../static/partials/navbar.ejs %>
     <% include ../static/partials/messages.ejs %>
+    <% include ../static/partials/currentUser.ejs %>
 
     <div style="display: flex; align-items: center;">
       <% if(currentUser) { %>
         <% include ../votes/voting.ejs %>
       <% } %>
-      <h1><%= post.title %></h1>
     </div>
 
     <main class="container">
-      <h1><%= post.title %></h1>
+      <h1>Post Title: <%= post.title %></h1>
       <a href="/topics/<%= post.topicId %>/posts/<%= post.id %>/edit" class="btn btn-warning">Edit</a>
         <form style="display:initial" action="/topics/<%= post.topicId %>/posts/<%= post.id %>/destroy" method="post">
           <button type="submit" class="btn btn-danger">Delete</button>
@@ -23,6 +23,7 @@
         <% if(currentUser) { %>
           <% include ../favorites/favoriting.ejs %>
         <% } %>
+      <p>Body of Post:</p>
       <p><%= post.body %></p>
 
       <section id="comment-form">
@@ -41,5 +42,9 @@
 
     </main>
     <% include ../static/partials/baseScripts.ejs %>
+
+    <a style="margin:2%" class="btn btn-secondary" href="/topics/<%= post.topicId %>">Return to All Posts</a>
+    <a style="margin:2%" class="btn btn-dark" href="/topics">Return to Topic Menu</a>
+
   </body>
 </html>
