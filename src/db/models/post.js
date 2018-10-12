@@ -48,7 +48,7 @@ module.exports = (sequelize, DataTypes) => {
         postId: post.id,
       });
     });
-    
+
   };
 
   Post.prototype.getFavoriteFor = function(userId) {
@@ -61,6 +61,14 @@ module.exports = (sequelize, DataTypes) => {
       .map( v => { return v.value })
       .reduce( (prev, next) => {return prev+next});
   };
+
+  Post.addScope("lastFiveFor", (userId) => {
+    return {
+      where: {userId: userId},
+      limit: 5,
+      order: [["createdAt", "DESC"]],
+    }
+  });
 
   return Post;
 
