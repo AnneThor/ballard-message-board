@@ -45,6 +45,9 @@
 
     <a style="margin:2%" class="btn btn-secondary" href="/topics/<%= post.topicId %>">Return to All Posts</a>
     <a style="margin:2%" class="btn btn-dark" href="/topics">Return to Topic Menu</a>
+    <% if(currentUser) { %>
+      <a style="margin:2%" class="btn btn-secondary" href="/users/<%= currentUser.id %>">Return to Profile</a>
+    <% } %>
 
   </body>
 </html>

@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const User = require("./models").User;
 const Post = require("./models").Post;
 const Comment = require("./models").Comment;
+const Favorite = require("./models").Favorite;
 
 module.exports = {
 
@@ -36,10 +37,15 @@ module.exports = {
           Comment.scope({method: ["lastFiveFor", id]}).all()
           .then( comments => {
             result["comments"] = comments;
-            callback(null, result);
-          })
-          .catch( err => {
-            callback(err);
+            Favorite.scope({method: ["userFavs", id]}).all()
+            .then( favorites => {
+              result["favorites"] = favorites;
+              callback(null, result);
+            })
+            .catch(err => {
+              console.log("entered error in Queries");
+              callback(err);
+            });
           });
         });
       }
