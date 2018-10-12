@@ -73,6 +73,7 @@ describe("routes : votes", () => {
             }
           })
           .then( vote => {
+            console.log(vote);
             expect(vote).toBeNull();
             done();
           })
