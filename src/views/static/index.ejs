@@ -11,13 +11,21 @@
       <!-- Page Content -->
       <main class="container">
 
-        <!-- Jumbotron Header -->
-        <header class="jumbotron my-4">
-          <h1 class="display-3">Welcome to Bloccit</h1>
-          <p class="lead">An application for users to share information.</p>
-          <a href="/users/sign_up" class="btn btn-primary btn-lg">Sign up</a>
-          <a href="/users/sign_in" class="btn btn-primary btn-lg">Sign in</a>
-        </header>
+        <!-- Jumbotron Header header class="jumbotron my-4" -->
+
+      <header class="jumbotron my-4">
+        <section class="row text-center">
+          <section class="col-lg-6">
+            <h3 class="display-4">Welcome to the Ballard Message Board</h3>
+            <p class="lead">Where Ballard residents can share local news.</p>
+            <a href="/users/sign_up" class="btn btn-primary btn-lg">Sign up</a>
+            <a href="/users/sign_in" class="btn btn-primary btn-lg">Sign in</a>
+          </section>
+          <section class="col-lg-6">
+            <% include ./partials/maps.ejs %>
+          </section>
+        </section>
+      </header>
 
         <!-- Page Features -->
         <section class="row text-center">

@@ -88,9 +88,9 @@ describe("routes : favorites", () => {
         });
       });
 
-    }); //end of describe guest favoriting
+    });
 
-  }); //end of guest signing in
+  });
 
 
   describe("signed in user favoriting and unfavoriting", () => {
@@ -143,7 +143,6 @@ describe("routes : favorites", () => {
         request.post(options, (err, res, body) => {
           this.post.getFavorites()
           .then( favorites => {
-            console.log("get favorites inside create describe: ", favorites.length);
             expect(favorites.length).toBe(2); //one we added plus the one at creation
             done();
           })
