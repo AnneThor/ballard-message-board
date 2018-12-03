@@ -1,5 +1,33 @@
 body {
   padding-top: 54px;
+  padding-bottom: 20px;
+  font-family: 'EB Garamond', 'Roboto Slab', Serif;
+  background: url(../images/seattle.jpg) no-repeat center center fixed;
+}
+
+.btn-margin {
+  margin: 0px 2px;
+}
+
+.dark-font {
+  color: black;
+  font-weight: bold;
+  text-shadow: 1px 1px lightgrey;
+}
+
+.light-font {
+  color: white;
+  text-shadow: 1px 1px black;
+}
+
+.topic-header, .post-header {
+  margin: 1px;
+}
+
+.translucent {
+  background:rgba(255,255,255,0.8);
+  padding: 2px;
+  font-weight: bold;
 }
 
 #map {

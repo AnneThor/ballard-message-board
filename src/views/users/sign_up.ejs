@@ -7,27 +7,27 @@
     <% include ../static/partials/navbar.ejs %>
     <main class="container">
       <% include ../static/partials/messages.ejs %>
-      <h1>Sign up</h1>
+      <h1 class="dark-font">Sign up</h1>
       <form action="/users" method="post">
 
         <div class="form-group">
-          <label for="email">Email</label>
+          <label for="email" class="light-font">Email</label>
           <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="Enter email">
-          <small class="text-muted" id="emailHelp">email address must be a valid address</small>
+          <small class="light-font" id="emailHelp">Email address must be a valid</small>
         </div>
 
         <div>
-          <label for="password">Password</label>
+          <label for="password" class="light-font">Password</label>
           <input type="password" class="form-control" name="password" aria-describedby="passwordHelp" placeholder="Enter password">
-          <small class="text-muted" id="passwordHelp">password must match confirmation below</small>
+          <small class="light-font" id="passwordHelp">Password must match confirmation below</small>
         </div>
 
         <div>
-          <label for="passwordConfirmation">Password confirmation</label>
+          <label for="passwordConfirmation" class="light-font">Password confirmation</label>
           <input type="password" class="form-control" name="passwordConfirmation" aria-describedby="passwordHelp" placeholder="Enter password confirmation">
         </div>
 
-        <button type="submit" class="btn btn-primary">Sign up</button>
+        <button type="submit" class="btn btn-dark" style="margin-top: 2px;">Sign up</button>
 
       </form>
     </main>

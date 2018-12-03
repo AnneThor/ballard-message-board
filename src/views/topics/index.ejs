@@ -8,7 +8,7 @@
       <% include ../static/partials/navbar.ejs %>
       <% include ../static/partials/currentUser.ejs %>
 
-      <h1>Topics</h1>
+      <h1 class="dark-font">What's New in Ballard, Washington</h1>
 
       <% if( currentUser && currentUser.isAdmin() ) { %>
         <a href="/topics/new" class="btn btn-sucess">New Topic</a>
@@ -16,7 +16,7 @@
 
       <ul class="list-group">
         <% topics.forEach( topic => { %>
-          <li class="list-group-item">
+          <li class="list-group-item topic-header">
             <a href="/topics/<%= topic.id %>"> <%= topic.title %> </a>
           </li>
         <% }) %>

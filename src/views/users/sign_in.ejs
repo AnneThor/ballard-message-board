@@ -10,22 +10,22 @@
 
       <% include ../static/partials/messages.ejs %>
 
-      <h1>Sign in</h1>
+      <h1 class="dark-font">Sign in</h1>
 
       <form action="/users/sign_in" method="post">
         <div class="form-group">
-          <label for="email">Email</label>
+          <label for="email" class="light-font">Email</label>
           <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="Enter email">
-          <small class="text-muted" id="emailHelp">Enter your registered email</small>
+          <small class="light-font" id="emailHelp">Enter your registered email address</small>
         </div>
 
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="password" class="light-font">Password</label>
           <input type="password" class="form-control" name="password" aria-describedby="passwordHelp" placeholder="Enter password">
-          <small class="text-muted" id="passwordHelp">passwords are minimum 6 characters in length</small>
+          <small class="light-font" id="passwordHelp">Enter the password associated with your registered account</small>
         </div>
 
-        <button type="submit" class="btn btn-primary">Sign in</button>
+        <button type="submit" class="btn btn-dark">Sign in</button>
       </form>
     </main>
 

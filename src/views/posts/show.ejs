@@ -15,16 +15,18 @@
     </div>
 
     <main class="container">
-      <h1>Post Title: <%= post.title %></h1>
-      <a href="/topics/<%= post.topicId %>/posts/<%= post.id %>/edit" class="btn btn-warning">Edit</a>
+      <h1 class="light-font"><%= post.title %></h1>
+      <h3 class="light-font">Body of Post:</h3>
+      <p class="translucent"><%= post.body %></p>
+      <div class="row justify-content-end">
+        <a href="/topics/<%= post.topicId %>/posts/<%= post.id %>/edit" class="btn btn-dark btn-margin">Edit</a>
         <form style="display:initial" action="/topics/<%= post.topicId %>/posts/<%= post.id %>/destroy" method="post">
-          <button type="submit" class="btn btn-danger">Delete</button>
+          <button type="submit" class="btn btn-dark btn-margin">Delete</button>
         </form>
         <% if(currentUser) { %>
           <% include ../favorites/favoriting.ejs %>
         <% } %>
-      <p>Body of Post:</p>
-      <p><%= post.body %></p>
+      </div>
 
       <section id="comment-form">
         <% if(currentUser) { %>
@@ -43,8 +45,10 @@
     </main>
     <% include ../static/partials/baseScripts.ejs %>
 
-    <a style="margin:2%" class="btn btn-secondary" href="/topics/<%= post.topicId %>">Return to All Posts</a>
-    <a style="margin:2%" class="btn btn-dark" href="/topics">Return to Topic Menu</a>
+    <section class="row justify-content-center">
+      <a style="margin:2%" class="btn btn-secondary" href="/topics/<%= post.topicId %>">Return to All Posts</a>
+      <a style="margin:2%" class="btn btn-secondary" href="/topics">Return to Topic Menu</a>
+    </section>
 
   </body>
 </html>

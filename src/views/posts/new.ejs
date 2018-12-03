@@ -10,19 +10,19 @@
 
       <% include ../static/partials/messages.ejs %>
 
-      <h1>New Post</h1>
+      <h1 class="light-font">New Post</h1>
       <form action="/topics/<%= topicId %>/posts/create" method="post">
         <div class="form-group">
-          <label for="title">Post title</label>
+          <label for="title" class="light-font">Post title</label>
           <input type="text" class="form-control" name="title" aria-describedby="titleHelp" placeholder="Enter Title">
-          <small class="text-muted" id="titleHelp">title must be 2 or more characters in length.</small>
+          <small class="light-font" id="titleHelp">Post title must be at least two characters long</small>
         </div>
         <div class="form-group">
-          <label for="body">Post body</label>
+          <label for="body" class="light-font">Post body</label>
           <textarea rows="4" class="form-control" name="body" placeholder="Enter Post body"></textarea>
-          <small class="text-muted" id="bodyHelp">body must be 10 or more characters in length.</small>
+          <small class="light-font" id="bodyHelp">Post body must be at least ten characters long</small>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-dark">Submit</button>
       </form>
     </main>
 

@@ -7,13 +7,13 @@
     <% include ../static/partials/navbar.ejs %>
     <main class="container">
       <% include ../static/partials/messages.ejs %>
-      <h1><%= `${user.email}'s profile` %></h1>
+      <h1 class="light-font row justify-content-center"><%= `${user.email}'s profile` %></h1>
       <hr>
-      <h2>Latest Posts</h2>
+      <h2 class="light-font">Latest Posts:</h2>
       <ul class="list-unstyled">
         <% if(posts) { %>
           <% posts.forEach( post => { %>
-            <li>
+            <li class="translucent dark-font">
               <a href="/topics/<%= post.topicId %>/posts/<%= post.id %>">
                 <%= post.title %>
               </a>
@@ -22,11 +22,11 @@
         <% } %>
       </ul>
       <hr>
-      <h2>Latest Comments</h2>
+      <h2 class="light-font">Latest Comments:</h2>
       <ul class="list-unstyled">
         <% if(comments) { %>
           <% comments.forEach( comment => { %>
-            <li>
+            <li class="translucent dark-font">
               <span>Post: </span>
               <a href="/topics/<%= comment.Post.topicId %>/posts/<%= comment.Post.id %>">
                 <%= comment.Post.title %>

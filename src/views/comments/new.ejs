@@ -1,9 +1,15 @@
 
+<div class="row justify-content-end">
+
 <form style="width:50%" action="/topics/<%= post.topicId %>/posts/<%= post.id %>/comments/create" method="post">
   <div class="form-group">
-    <label for="body">New Comment</label>
+    <label for="body" class="light-font">New Comment</label>
     <textarea class="form-control" name="body" aria-describedby="bodyHelp" placeholder="Enter comment"></textarea>
-    <small class="text-muted" id="bodyHelp">comment must be 5 or more characters in length.</small>
+    <small class="light-font" id="bodyHelp">comment must be 5 or more characters in length.</small>
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <div class="row justify-content-end">
+    <button type="submit" class="btn btn-dark btn-margin">Submit</button>
+  </div>
 </form>
+
+</div>

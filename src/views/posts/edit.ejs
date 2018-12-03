@@ -7,17 +7,17 @@
     <% include ../static/partials/navbar.ejs %>
     <% include ../static/partials/messages.ejs %>
     <main class="container">
-      <h1>Edit Post</h1>
+      <h1 class="light-font">Edit Post</h1>
       <form action="/topics/<%= post.topicId %>/posts/<%= post.id %>/update" method="post">
         <div class="form-group">
-          <label for="title">Post title</label>
+          <label for="title" class="light-font">Post title</label>
           <input value="<%= post.title %>" type="text" class="form-control" name="title" aria-describedby="titleHelp" placeholder="Enter Title">
         </div>
         <div>
-          <label for="body">Post body</label>
+          <label for="body" class="light-font">Post body</label>
           <textarea rows="4" class="form-control" name="body" placeholder="Enter Description"><%= post.body %></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="submit" class="btn btn-dark btn-margin">Update</button>
       </form>
     </main>
     <% include ../static/partials/baseScripts.ejs %>
